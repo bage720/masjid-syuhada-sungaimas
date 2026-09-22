@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masjid Syuhada Sungai Mas</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media print {
+            body { background: white !important; color: black !important; }
+            header, button, .no-print { display: none !important; }
+            .print-area { box-shadow: none !important; border: none !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800 antialiased pb-24">
+
+    <!-- Navbar Header -->
+    <header class="bg-emerald-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="pindahTab('beranda')">
+                <img id="nav-logo" src="https://images.unsplash.com/photo-1591825729269-caeb344fdfdf?w=100" class="w-10 h-10 rounded-full object-cover border-2 border-white/80" alt="Logo">
+                <div>
+                    <h1 class="font-bold text-sm md:text-base leading-tight" id="nav-nama-masjid">Masjid Syuhada Sungai Mas</h1>
+                    <p class="text-[11px] text-emerald-200" id="nav-lokasi-singkat">Sungai Mas, Aceh Barat</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button onclick="pindahTab('beranda')" id="btn-tab-beranda" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-900 text-white transition"><i class="fa-solid fa-house mr-1"></i> Beranda</button>
+                <button onclick="pindahTab('donasi')" id="btn-tab-donasi" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-800 text-white transition"><i class="fa-solid fa-hand-holding-dollar mr-1"></i> Donasi</button>
+                <button onclick="cekAdmin()" class="p-2 rounded-lg text-xs bg-emerald-800/80 hover:bg-emerald-900 text-emerald-100 transition" title="Mode Pengurus/Admin"><i class="fa-solid fa-gear"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="max-w-4xl mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- ================= TAB BERANDA & PUBLIK ================= -->
+        <div id="view-beranda" class="space-y-6">
+            <!-- Hero Banner Foto Masjid -->
+            <div class="relative rounded-2xl overflow-hidden shadow-md bg-emerald-900 text-white">
+                <img id="hero-foto" src="https://images.unsplash.com/photo-1564769625405-d9e0652aa968?w=800" class="w-full h-52 md:h-72 object-cover opacity-60" alt="Masjid">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-5 md:p-6">
+                    <span id="banner-slogan" class="bg-emerald-500/90 text-white text-[10px] md:text-xs font-bold px-3 py-1 rounded-full w-max mb-2 uppercase tracking-wider">Pusat Ibadah, Dakwah & Pemberdayaan Ummat</span>
+                    <h2 class="text-xl md:text-3xl font-bold" id="banner-nama-masjid">Masjid Syuhada Sungai Mas</h2>
+                    <p class="text-xs md:text-sm text-slate-200 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-1.5 text-emerald-400"></i> <span id="banner-alamat">Jl. Utama Sungai Mas, Aceh Barat</span></p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <a id="link-gmaps" href="#" target="_blank" class="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-3.5 py-2 rounded-xl text-xs font-medium transition inline-flex items-center"><i class="fa-solid fa-map-location-dot mr-1.5"></i> Buka Google Maps</a>
+                        <a id="link-wa" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-medium transition inline-flex items-center"><i class="fa-brands fa-whatsapp mr-1.5"></i> Hubungi Pengurus</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Struktur Pengurus -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-users text-emerald-600 mr-1.5"></i> Dewan Pengurus Masjid</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex items-center space-x-3">
+                        <div class="w-9 h-9 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-user-tie"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-400 uppercase font-bold">Ketua DKM</p>
+                            <p id="info-ketua" class="text-xs md:text-sm font-bold text-slate-700">-</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex items-center space-x-3">
+                        <div class="w-9 h-9 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-user-pen"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-400 uppercase font-bold">Sekretaris</p>
+                            <p id="info-sekretaris" class="text-xs md:text-sm font-bold text-slate-700">-</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex items-center space-x-3">
+                        <div class="w-9 h-9 bg-emerald-100 text-emerald-700 rounded-lg flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-wallet"></i></div>
+                        <div>
+                            <p class="text-[10px] text-slate-400 uppercase font-bold">Bendahara</p>
+                            <p id="info-bendahara" class="text-xs md:text-sm font-bold text-slate-700">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Ringkasan Saldo Kas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Pemasukan</p>
+                        <h2 id="pub-total-masuk" class="text-xl md:text-2xl font-bold text-emerald-600 mt-1">Rp 0</h2>
+                    </div>
+                    <div class="w-11 h-11 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-arrow-down-long"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Pengeluaran</p>
+                        <h2 id="pub-total-keluar" class="text-xl md:text-2xl font-bold text-rose-600 mt-1">Rp 0</h2>
+                    </div>
+                    <div class="w-11 h-11 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-arrow-up-long"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider"><span id="label-periode-info">Saldo Akhir</span></p>
+                        <h2 id="pub-sisa-saldo" class="text-xl md:text-2xl font-bold text-emerald-700 mt-1">Rp 0</h2>
+                    </div>
+                    <div class="w-11 h-11 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Riwayat Kas Publik -->
+            <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 print-area">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-3">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base flex items-center">
+                            <i class="fa-solid fa-book-open text-emerald-600 mr-2"></i>Laporan Keuangan Kas
+                        </h3>
+                        <p id="teks-periode-laporan" class="text-xs text-slate-400 mt-0.5">Periode Berjalan</p>
+                    </div>
+                    <div class="flex items-center gap-2 w-full md:w-auto no-print">
+                        <select id="filter-kategori" onchange="renderAplikasi()" class="bg-slate-50 border border-slate-200 text-xs rounded-xl p-2.5 w-full md:w-auto">
+                            <option value="ALL">Semua Transaksi</option>
+                            <option value="MASUK">Pemasukan Saja</option>
+                            <option value="KELUAR">Pengeluaran Saja</option>
+                        </select>
+                        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2.5 rounded-xl text-xs font-medium transition inline-flex items-center"><i class="fa-solid fa-print mr-1.5"></i> Cetak</button>
+                    </div>
+                </div>
+                
+                <!-- Info Saldo Awal di Tabel -->
+                <div id="box-saldo-awal-tampil" class="mb-3 p-3 bg-emerald-50/60 border border-emerald-100 rounded-xl flex justify-between items-center text-xs">
+                    <span class="font-semibold text-emerald-800"><i class="fa-solid fa-flag mr-1.5"></i> Saldo Awal / Bawaan Bulan Lalu</span>
+                    <span id="val-saldo-awal-tampil" class="font-bold text-emerald-700">Rp 0</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-100 text-[11px] text-slate-400 uppercase">
+                                <th class="py-2.5 px-2">Tanggal & Uraian</th>
+                                <th class="py-2.5 px-2">Kategori</th>
+                                <th class="py-2.5 px-2 text-right">Nominal</th>
+                                <th class="py-2.5 px-2 text-center">Bukti</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-publik" class="text-sm divide-y divide-slate-100">
+                            <!-- Diisi JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="empty-publik" class="text-center py-8 text-slate-400 text-sm hidden">Belum ada catatan kas masuk.</div>
+            </div>
+
+            <!-- Form Kritik & Saran Jamaah -->
+            <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200 no-print">
+                <h3 class="font-bold text-slate-800 text-base mb-1 flex items-center">
+                    <i class="fa-solid fa-comments text-emerald-600 mr-2"></i>Kotak Kritik & Saran Jamaah
+                </h3>
+                <p class="text-xs text-slate-500 mb-4">Masukan, saran, atau pertanyaan Anda akan terkirim langsung via WhatsApp ke pengurus masjid.</p>
+                
+                <form onsubmit="kirimSaranWA(event)" class="space-y-3.5 text-xs">
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">Nama Lengkap / Jamaah</label>
+                        <input type="text" id="saran-nama" required placeholder="Contoh: Bpk. Ahmad" class="w-full border border-slate-200 p-2.5 rounded-xl focus:outline-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">Pesan Kritik / Saran</label>
+                        <textarea id="saran-pesan" rows="3" required placeholder="Tuliskan saran untuk kemajuan masjid..." class="w-full border border-slate-200 p-2.5 rounded-xl focus:outline-emerald-500"></textarea>
+                    </div>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl transition inline-flex items-center shadow-sm">
+                        <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i> Kirim Saran via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= TAB DONASI & QRIS ================= -->
+        <div id="view-donasi" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center max-w-lg mx-auto">
+                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full uppercase">Mari Berinfaq & Bersedekah</span>
+                <h3 class="text-xl font-bold text-slate-800 mt-2">Salurkan Donasi Terbaik Anda</h3>
+                <p class="text-xs text-slate-500 mt-1">Scan QRIS di bawah menggunakan aplikasi e-Wallet atau transfer ke rekening resmi masjid.</p>
+                
+                <!-- QRIS Box -->
+                <div class="mt-5 p-4 bg-slate-50 border border-slate-200 rounded-2xl inline-block shadow-inner">
+                    <img id="tampil-qris" src="" class="w-48 h-48 md:w-56 md:h-56 object-contain mx-auto rounded-lg bg-white p-2 border border-slate-200" alt="QRIS Masjid">
+                    <p class="text-[11px] text-slate-400 mt-2 font-medium">QRIS Resmi Masjid</p>
+                </div>
+
+                <!-- Daftar Rekening -->
+                <div class="mt-6 text-left">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Nomor Rekening Bank</h4>
+                    <div id="list-rekening-tampil" class="space-y-2">
+                        <!-- Diisi JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PANEL ADMIN / BENDAHARA ================= -->
+        <div id="view-admin" class="space-y-6 hidden">
+            <div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl flex justify-between items-center text-xs md:text-sm">
+                <div>
+                    <span class="font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> Mode Admin Aktif:</span> Anda memiliki hak akses penuh kelola keuangan & profil masjid.
+                </div>
+                <button onclick="keluarAdmin()" class="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1.5 rounded-lg font-medium transition text-xs">Keluar Admin</button>
+            </div>
+
+            <!-- Navigasi Menu Admin -->
+            <div class="flex gap-2 border-b border-slate-200 pb-3">
+                <button onclick="pindahSubAdmin('kas')" id="subbtn-kas" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition">Kelola Kas</button>
+                <button onclick="pindahSubAdmin('pengaturan')" id="subbtn-pengaturan" class="px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">Pengaturan Masjid</button>
+            </div>
+
+            <!-- Sub Tab: Input & Kelola Kas -->
+            <div id="subview-kas" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Form Input Transaksi -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-fit">
+                    <h3 class="font-bold text-slate-800 text-sm mb-4 flex items-center">
+                        <i class="fa-solid fa-circle-plus text-emerald-600 mr-2"></i>Catat Transaksi Baru
+                    </h3>
+                    <form id="form-transaksi" onsubmit="simpanTransaksi(event)" class="space-y-3.5">
+                        <input type="hidden" id="edit-index" value="">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Jenis Kas</label>
+                            <select id="input-tipe" class="w-full rounded-xl border border-slate-200 p-2 text-xs bg-white focus:outline-emerald-500">
+                                <option value="MASUK">Pemasukan (Kas Masuk)</option>
+                                <option value="KELUAR">Pengeluaran (Kas Keluar)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Uraian / Keterangan</label>
+                            <input type="text" id="input-keterangan" required placeholder="Contoh: Infaq Jumat" class="w-full rounded-xl border border-slate-200 p-2 text-xs focus:outline-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Nominal (Rp)</label>
+                            <input type="number" id="input-nominal" required placeholder="Contoh: 250000" class="w-full rounded-xl border border-slate-200 p-2 text-xs focus:outline-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Tanggal</label>
+                            <input type="date" id="input-tanggal" required class="w-full rounded-xl border border-slate-200 p-2 text-xs focus:outline-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-500 mb-1">Upload Foto / Bukti Kwitansi (Opsional)</label>
+                            <input type="file" id="input-foto" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
+                        </div>
+                        <div class="pt-2 flex gap-2">
+                            <button type="submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-xl transition text-xs shadow-sm">Simpan Transaksi</button>
+                            <button type="button" id="btn-batal-edit" onclick="resetFormTransaksi()" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-2 rounded-xl text-xs transition">Batal</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabel Manajemen Admin -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 md:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center">
+                            <i class="fa-solid fa-list-check text-emerald-600 mr-2"></i>Daftar & Edit Transaksi Kas
+                        </h3>
+                        <button onclick="resetSemuaData()" class="text-[11px] text-rose-500 hover:text-rose-700 font-medium">Reset Semua Data</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-100 text-[11px] text-slate-400 uppercase">
+                                    <th class="py-2.5 px-2">Tanggal & Uraian</th>
+                                    <th class="py-2.5 px-2">Jenis</th>
+                                    <th class="py-2.5 px-2 text-right">Nominal</th>
+                                    <th class="py-2.5 px-2 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-admin" class="text-sm divide-y divide-slate-100">
+                                <!-- Diisi JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub Tab: Pengaturan Profil Masjid, Saldo Awal, & Kepengurusan -->
+            <div id="subview-pengaturan" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-2xl mx-auto hidden space-y-5">
+                <h3 class="font-bold text-slate-800 text-base border-b border-slate-100 pb-3 flex items-center">
+                    <i class="fa-solid fa-gear text-emerald-600 mr-2"></i>Pengaturan Masjid & Periode Kas
+                </h3>
+                <form id="form-pengaturan" onsubmit="simpanPengaturan(event)" class="space-y-4 text-xs">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Nama Periode / Bulan Kas</label>
+                            <input type="text" id="set-periode" required class="w-full border border-slate-200 p-2.5 rounded-xl bg-white" placeholder="Contoh: Juni 2026">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Saldo Awal / Bawaan (Rp)</label>
+                            <input type="number" id="set-saldo-awal" required class="w-full border border-slate-200 p-2.5 rounded-xl bg-white" placeholder="Contoh: 1500000">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">Nama Masjid</label>
+                        <input type="text" id="set-nama" required class="w-full border border-slate-200 p-2.5 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">Slogan / Sambutan Beranda</label>
+                        <input type="text" id="set-slogan" required class="w-full border border-slate-200 p-2.5 rounded-xl">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold text-slate-600 mb-1">Alamat Lengkap Masjid</label>
+                            <input type="text" id="set-alamat" required class="w-full border border-slate-200 p-2.5 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-600 mb-1">Lokasi Singkat (Navbar)</label>
+                            <input type="text" id="set-lokasi" required class="w-full border border-slate-200 p-2.5 rounded-xl">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-emerald-50/40 p-4 rounded-xl border border-emerald-100">
+                        <div>
+                            <label class="block font-semibold text-emerald-900 mb-1">Nama Ketua DKM</label>
+                            <input type="text" id="set-ketua" required class="w-full border border-slate-200 p-2.5 rounded-xl bg-white">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-emerald-900 mb-1">Nama Sekretaris</label>
+                            <input type="text" id="set-sekretaris" required class="w-full border border-slate-200 p-2.5 rounded-xl bg-white">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-emerald-900 mb-1">Nama Bendahara</label>
+                            <input type="text" id="set-bendahara" required class="w-full border border-slate-200 p-2.5 rounded-xl bg-white">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold text-slate-600 mb-1">Link Google Maps URL</label>
+                            <input type="url" id="set-gmaps" required class="w-full border border-slate-200 p-2.5 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-600 mb-1">Nomor WhatsApp Pengurus (Format: 628xxx)</label>
+                            <input type="text" id="set-wa" required class="w-full border border-slate-200 p-2.5 rounded-xl">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold text-slate-600 mb-1">Upload Logo Masjid</label>
+                            <input type="file" id="set-logo-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-600 mb-1">Upload Banner Masjid</label>
+                            <input type="file" id="set-banner-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 cursor-pointer">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">Upload QRIS Donasi</label>
+                        <input type="file" id="set-qris-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 mb-1">Daftar Rekening Bank</label>
+                        <textarea id="set-rekening" rows="3" class="w-full border border-slate-200 p-2.5 rounded-xl" placeholder="Contoh: BSI: 7123456789 a.n Masjid Syuhada"></textarea>
+                        <p class="text-[10px] text-slate-400 mt-1">Pisahkan setiap rekening dengan baris baru (enter).</p>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl transition">Simpan Pengaturan</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Lightbox Foto / Bukti -->
+    <div id="modal-foto" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden" onclick="tutupModalFoto()">
+        <div class="bg-white p-3 rounded-2xl max-w-lg w-full text-center relative" onclick="event.stopPropagation()">
+            <button onclick="tutupModalFoto()" class="absolute top-2 right-2 bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full text-slate-600 font-bold"><i class="fa-solid fa-xmark"></i></button>
+            <h4 class="font-bold text-slate-700 text-sm mb-2">Bukti Transaksi</h4>
+            <img id="img-lightbox" src="" class="w-full max-h-[70vh] object-contain rounded-xl bg-slate-50 border border-slate-100" alt="Bukti">
+        </div>
+    </div>
+
+    <!-- Script Logika Aplikasi -->
+    <script>
+        document.getElementById('input-tanggal').valueAsDate = new Date();
+
+        const defaultProfil = {
+            nama: "Masjid Syuhada Sungai Mas",
+            slogan: "Pusat Ibadah, Dakwah & Pemberdayaan Ummat",
+            alamat: "Kec. Sungai Mas, Kabupaten Aceh Barat, Aceh",
+            lokasiSingkat: "Sungai Mas, Aceh Barat",
+            periode: "Juni 2026",
+            saldoAwal: 1500000,
+            ketua: "H. Tgk. M. Ali",
+            sekretaris: "Ahmad Fauzi, S.Pd",
+            bendahara: "Bendahara Masjid",
+            gmaps: "https://maps.google.com/?q=Sungai+Mas+Aceh+Barat",
+            wa: "6281234567890",
+            logo: "https://images.unsplash.com/photo-1591825729269-caeb344fdfdf?w=100",
+            banner: "https://images.unsplash.com/photo-1564769625405-d9e0652aa968?w=800",
+            qris: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DONASI-MASJID-SYUHADA",
+            rekening: "BSI (Bank Syariah Indonesia): 7123456789 a.n Kas Masjid\nBank Aceh Syariah: 0102030405 a.n Pembangunan Masjid"
+        };
+
+        const defaultTransaksi = [
+            { tipe: 'MASUK', keterangan: 'Infaq Kotak Amal Shalat Jumat', nominal: 1250000, tanggal: '2026-06-01', foto: '' },
+            { tipe: 'KELUAR', keterangan: 'Pembelian Perlengkapan Kebersihan', nominal: 350000, tanggal: '2026-06-05', foto: '' }
+        ];
+
+        let profil = JSON.parse(localStorage.getItem('masjid_profil_v2')) || defaultProfil;
+        let transaksiList = JSON.parse(localStorage.getItem('masjid_transaksi_v2')) || defaultTransaksi;
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
+
+        function renderAplikasi() {
+            document.getElementById('nav-nama-masjid').innerText = profil.nama;
+            document.getElementById('nav-lokasi-singkat').innerText = profil.lokasiSingkat;
+            document.getElementById('nav-logo').src = profil.logo;
+            document.getElementById('banner-nama-masjid').innerText = profil.nama;
+            document.getElementById('banner-slogan').innerText = profil.slogan;
+            document.getElementById('banner-alamat').innerText = profil.alamat;
+            document.getElementById('link-gmaps').href = profil.gmaps;
+            document.getElementById('link-wa').href = `https://wa.me/${profil.wa}?text=Assalamu'alaikum%20Pengurus%20${encodeURIComponent(profil.nama)}`;
+            document.getElementById('tampil-qris').src = profil.qris;
+
+            document.getElementById('info-ketua').innerText = profil.ketua;
+            document.getElementById('info-sekretaris').innerText = profil.sekretaris;
+            document.getElementById('info-bendahara').innerText = profil.bendahara;
+            document.getElementById('teks-periode-laporan').innerText = `Periode: ${profil.periode}`;
+            document.getElementById('label-periode-info').innerText = `Saldo Kas (${profil.periode})`;
+
+            document.getElementById('val-saldo-awal-tampil').innerText = formatRupiah(profil.saldoAwal);
+
+            const containerRek = document.getElementById('list-rekening-tampil');
+            containerRek.innerHTML = '';
+            profil.rekening.split('\n').forEach(line => {
+                if(line.trim() !== '') {
+                    containerRek.innerHTML += `
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                            <span class="text-xs font-medium text-slate-700">${line}</span>
+                            <i class="fa-solid fa-building-columns text-emerald-600"></i>
+                        </div>
+                    `;
+                }
+            });
+
+            let totalMasuk = Number(profil.saldoAwal);
+            let totalKeluar = 0;
+            const filterKat = document.getElementById('filter-kategori').value;
+            const tabelPublik = document.getElementById('tabel-publik');
+            const emptyPublik = document.getElementById('empty-publik');
+            tabelPublik.innerHTML = '';
+
+            let filteredList = transaksiList.filter(item => {
+                if (filterKat === 'MASUK') return item.tipe === 'MASUK';
+                if (filterKat === 'KELUAR') return item.tipe === 'KELUAR';
+                return true;
+            });
+
+            transaksiList.forEach(item => {
+                if (item.tipe === 'MASUK') totalMasuk += Number(item.nominal);
+                else totalKeluar += Number(item.nominal);
+            });
+
+            let murniMasuk = totalMasuk - Number(profil.saldoAwal);
+            document.getElementById('pub-total-masuk').innerText = formatRupiah(murniMasuk);
+            document.getElementById('pub-total-keluar').innerText = formatRupiah(totalKeluar);
+            document.getElementById('pub-sisa-saldo').innerText = formatRupiah(totalMasuk - totalKeluar);
+
+            if (filteredList.length === 0) {
+                emptyPublik.classList.remove('hidden');
+            } else {
+                emptyPublik.classList.add('hidden');
+                filteredList.forEach((item) => {
+                    tabelPublik.innerHTML += `
+                        <tr class="hover:bg-slate-50/50">
+                            <td class="py-3 px-2">
+                                <span class="text-[11px] text-slate-400 block">${item.tanggal}</span>
+                                <span class="font-medium text-slate-700">${item.keterangan}</span>
+                            </td>
+                            <td class="py-3 px-2">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${item.tipe === 'MASUK' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}">
+                                    ${item.tipe === 'MASUK' ? 'Masuk' : 'Keluar'}
+                                </span>
+                            </td>
+                            <td class="py-3 px-2 text-right font-bold ${item.tipe === 'MASUK' ? 'text-emerald-600' : 'text-rose-600'}">
+                                ${item.tipe === 'MASUK' ? '+' : '-'} ${formatRupiah(item.nominal)}
+                            </td>
+                            <td class="py-3 px-2 text-center">
+                                ${item.foto ? `<button onclick="bukaModalFoto('${item.foto}')" class="text-emerald-600 hover:text-emerald-800 text-xs bg-emerald-50 hover:bg-emerald-100 p-1.5 rounded-lg"><i class="fa-solid fa-image"></i></button>` : `<span class="text-slate-300 text-xs">-</span>`}
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            const tabelAdmin = document.getElementById('tabel-admin');
+            tabelAdmin.innerHTML = '';
+            transaksiList.forEach((item, index) => {
+                tabelAdmin.innerHTML += `
+                    <tr class="hover:bg-slate-50/50">
+                        <td class="py-3 px-2">
+                            <span class="text-[11px] text-slate-400 block">${item.tanggal}</span>
+                            <span class="font-medium text-slate-700">${item.keterangan}</span>
+                        </td>
+                        <td class="py-3 px-2">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${item.tipe === 'MASUK' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}">
+                                ${item.tipe === 'MASUK' ? 'Masuk' : 'Keluar'}
+                            </span>
+                        </td>
+                        <td class="py-3 px-2 text-right font-bold ${item.tipe === 'MASUK' ? 'text-emerald-600' : 'text-rose-600'}">
+                            ${item.tipe === 'MASUK' ? '+' : '-'} ${formatRupiah(item.nominal)}
+                        </td>
+                        <td class="py-3 px-2 text-center space-x-1">
+                            <button onclick="editTransaksi(${index})" class="text-sky-600 hover:text-sky-800 bg-sky-50 p-1.5 rounded-lg text-xs" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="hapusTransaksi(${index})" class="text-rose-600 hover:text-rose-800 bg-rose-50 p-1.5 rounded-lg text-xs" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            localStorage.setItem('masjid_profil_v2', JSON.stringify(profil));
+            localStorage.setItem('masjid_transaksi_v2', JSON.stringify(transaksiList));
+        }
+
+        function pindahTab(tab) {
+            document.getElementById('view-beranda').classList.add('hidden');
+            document.getElementById('view-donasi').classList.add('hidden');
+            document.getElementById('view-admin').classList.add('hidden');
+            document.getElementById('btn-tab-beranda').className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-800 text-white transition";
+            document.getElementById('btn-tab-donasi').className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-800 text-white transition";
+
+            if (tab === 'beranda') {
+                document.getElementById('view-beranda').classList.remove('hidden');
+                document.getElementById('btn-tab-beranda').className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-900 text-white shadow transition";
+            } else if (tab === 'donasi') {
+                document.getElementById('view-donasi').classList.remove('hidden');
+                document.getElementById('btn-tab-donasi').className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-900 text-white shadow transition";
+            } else if (tab === 'admin') {
+                document.getElementById('view-admin').classList.remove('hidden');
+            }
+        }
+
+        function pindahSubAdmin(sub) {
+            if (sub === 'kas') {
+                document.getElementById('subview-kas').classList.remove('hidden');
+                document.getElementById('subview-pengaturan').classList.add('hidden');
+                document.getElementById('subbtn-kas').className = "px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition";
+                document.getElementById('subbtn-pengaturan').className = "px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition";
+            } else {
+                document.getElementById('subview-kas').classList.add('hidden');
+                document.getElementById('subview-pengaturan').classList.remove('hidden');
+                document.getElementById('subbtn-pengaturan').className = "px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition";
+                document.getElementById('subbtn-kas').className = "px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition";
+                
+                document.getElementById('set-nama').value = profil.nama;
+                document.getElementById('set-slogan').value = profil.slogan;
+                document.getElementById('set-alamat').value = profil.alamat;
+                document.getElementById('set-lokasi').value = profil.lokasiSingkat;
+                document.getElementById('set-periode').value = profil.periode;
+                document.getElementById('set-saldo-awal').value = profil.saldoAwal;
+                document.getElementById('set-ketua').value = profil.ketua;
+                document.getElementById('set-sekretaris').value = profil.sekretaris;
+                document.getElementById('set-bendahara').value = profil.bendahara;
+                document.getElementById('set-gmaps').value = profil.gmaps;
+                document.getElementById('set-wa').value = profil.wa;
+                document.getElementById('set-rekening').value = profil.rekening;
+            }
+        }
+
+        function cekAdmin() {
+            let pin = prompt("Masukkan PIN Pengurus / Bendahara (Default: 1234):");
+            if (pin === "1234") {
+                pindahTab('admin');
+                pindahSubAdmin('kas');
+            } else if (pin !== null) {
+                alert("PIN salah!");
+            }
+        }
+
+        function keluarAdmin() {
+            pindahTab('beranda');
+        }
+
+        function simpanTransaksi(e) {
+            e.preventDefault();
+            const index = document.getElementById('edit-index').value;
+            const tipe = document.getElementById('input-tipe').value;
+            const keterangan = document.getElementById('input-keterangan').value;
+            const nominal = document.getElementById('input-nominal').value;
+            const tanggal = document.getElementById('input-tanggal').value;
+            const fileInput = document.getElementById('input-foto');
+
+            let prosesSimpan = (fotoBase64) => {
+                const dataBaru = {
+                    tipe,
+                    keterangan,
+                    nominal,
+                    tanggal,
+                    foto: fotoBase64 !== undefined ? fotoBase64 : (index !== "" ? transaksiList[index].foto : "")
+                };
+
+                if (index === "") {
+                    transaksiList.unshift(dataBaru);
+                } else {
+                    transaksiList[index] = dataBaru;
+                    document.getElementById('edit-index').value = "";
+                    document.getElementById('btn-batal-edit').classList.add('hidden');
+                }
+
+                document.getElementById('form-transaksi').reset();
+                document.getElementById('input-tanggal').valueAsDate = new Date();
+                renderAplikasi();
+                alert("Transaksi berhasil disimpan!");
+            };
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) { prosesSimpan(e.target.result); }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                prosesSimpan();
+            }
+        }
+
+        function editTransaksi(index) {
+            const item = transaksiList[index];
+            document.getElementById('edit-index').value = index;
+            document.getElementById('input-tipe').value = item.tipe;
+            document.getElementById('input-keterangan').value = item.keterangan;
+            document.getElementById('input-nominal').value = item.nominal;
+            document.getElementById('input-tanggal').value = item.tanggal;
+            document.getElementById('btn-batal-edit').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetFormTransaksi() {
+            document.getElementById('edit-index').value = "";
+            document.getElementById('form-transaksi').reset();
+            document.getElementById('input-tanggal').valueAsDate = new Date();
+            document.getElementById('btn-batal-edit').classList.add('hidden');
+        }
+
+        function hapusTransaksi(index) {
+            if (confirm("Yakin ingin menghapus catatan transaksi ini?")) {
+                transaksiList.splice(index, 1);
+                renderAplikasi();
+            }
+        }
+
+        function resetSemuaData() {
+            if (confirm("PERINGATAN: Seluruh data kas akan dihapus permanen!")) {
+                transaksiList = [];
+                renderAplikasi();
+            }
+        }
+
+        function simpanPengaturan(e) {
+            e.preventDefault();
+            profil.nama = document.getElementById('set-nama').value;
+            profil.slogan = document.getElementById('set-slogan').value;
+            profil.alamat = document.getElementById('set-alamat').value;
+            profil.lokasiSingkat = document.getElementById('set-lokasi').value;
+            profil.periode = document.getElementById('set-periode').value;
+            profil.saldoAwal = Number(document.getElementById('set-saldo-awal').value);
+            profil.ketua = document.getElementById('set-ketua').value;
+            profil.sekretaris = document.getElementById('set-sekretaris').value;
+            profil.bendahara = document.getElementById('set-bendahara').value;
+            profil.gmaps = document.getElementById('set-gmaps').value;
+            profil.wa = document.getElementById('set-wa').value;
+            profil.rekening = document.getElementById('set-rekening').value;
+
+            let logoFile = document.getElementById('set-logo-file').files[0];
+            let bannerFile = document.getElementById('set-banner-file').files[0];
+            let qrisFile = document.getElementById('set-qris-file').files[0];
+
+            let checkAndRender = () => {
+                renderAplikasi();
+                alert("Pengaturan masjid berhasil diperbarui!");
+                pindahSubAdmin('kas');
+            };
+
+            let filesToProcess = 0;
+            if (logoFile) filesToProcess++;
+            if (bannerFile) filesToProcess++;
+            if (qrisFile) filesToProcess++;
+
+            if (filesToProcess === 0) {
+                checkAndRender();
+                return;
+            }
+
+            if (logoFile) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    profil.logo = e.target.result;
+                    if (--filesToProcess === 0) checkAndRender();
+                };
+                reader.readAsDataURL(logoFile);
+            }
+            if (bannerFile) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    profil.banner = e.target.result;
+                    document.getElementById('hero-foto').src = e.target.result;
+                    if (--filesToProcess === 0) checkAndRender();
+                };
+                reader.readAsDataURL(bannerFile);
+            }
+            if (qrisFile) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    profil.qris = e.target.result;
+                    if (--filesToProcess === 0) checkAndRender();
+                };
+                reader.readAsDataURL(qrisFile);
+            }
+        }
+
+        function kirimSaranWA(e) {
+            e.preventDefault();
+            let nama = document.getElementById('saran-nama').value;
+            let pesan = document.getElementById('saran-pesan').value;
+            let textWA = `Assalamu'alaikum Pengurus ${profil.nama},%0A%0ASaya *${encodeURIComponent(nama)}* mengirimkan saran/pesan:%0A"${encodeURIComponent(pesan)}"`;
+            window.open(`https://wa.me/${profil.wa}?text=${textWA}`, '_blank');
+        }
+
+        function bukaModalFoto(url) {
+            document.getElementById('img-lightbox').src = url;
+            document.getElementById('modal-foto').classList.remove('hidden');
+        }
+
+        function tutupModalFoto() {
+            document.getElementById('modal-foto').classList.add('hidden');
+        }
+
+        renderAplikasi();
+    </script>
+</body>
+</html>
